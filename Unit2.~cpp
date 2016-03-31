@@ -1,0 +1,70 @@
+//---------------------------------------------------------------------------
+
+
+#pragma hdrstop
+
+#include "Unit2.h"
+ #include <fstream.h>
+//---------------------------------------------------------------------------
+
+#pragma package(smart_init)
+class Test
+{
+public:
+string Question[MAX];
+ifstream in;
+int num;
+int curr;
+int currkol;
+public:
+int answers[200];
+Test(char*);
+void Next() ;
+void Result() ;
+};
+Test::Test(char* Path)
+{
+in.open(Path);
+in>>num;
+curr=0;
+currkol=0;
+}  ;
+
+void Test::Next()
+{
+curr++;
+if(curr<num+1){
+string ques;
+int Nq;
+int KolV;
+string ques1;
+for(int i=0;i<150;i++){
+in>>ques1;
+ques=ques+' '+ques1;
+if(ques1.at(ques1.size()-1)=='?') break;
+}
+
+Nq=std::atoi( ques.substr(1,4).c_str());
+KolV=std::atoi(ques.substr(5,3).c_str());
+ques=ques.substr(8,ques.size());
+currkol=KolV;
+Question[0]=ques;
+for(int i=0;i<KolV;i++){
+string currs;
+string currs1;
+for(int i=0;i<150;i++){
+in>>currs1;
+currs=currs+' '+currs1;
+if(currs1.at(currs1.size()-1)=='.') break;
+}
+Question[i+1]=currs;
+}
+}else{
+this->Result();
+}
+};
+
+void Test::Result(){
+
+
+};

@@ -1,0 +1,51 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+ #include <fstream.h>
+ #include "Unit1.h"
+  #include "Unit2.cpp"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+#define MaxQ 200 // Максимум вопросов в тесте
+#define MaxV    // Максимум вариантов ответов на вопрос
+TForm1 *Form1;
+Test tz(".\\asd.txt"); //Запуск с адресом файла к тестам
+//---------------------------------------------------------------------------
+__fastcall TForm1::TForm1(TComponent* Owner)
+        : TForm(Owner)
+{
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button1Click(TObject *Sender)
+{
+Button1->Enabled=false;
+if(tz.alc>0){
+Button1->Caption="Тест завершен";
+Label3->Caption="Тест показал,что ваша игра категории"+(AnsiString)tz.fullres.c_str();
+}else{
+Button1->Caption="Следующий вопрос";
+tz.Next();
+Label1->Caption=tz.Question[0].c_str();
+tz.answers[tz.curr]=RadioGroup1->ItemIndex;
+RadioGroup1->Items->Clear();
+for(int i=0;i<tz.currkol;i++)
+RadioGroup1->Items->Add(tz.Question[i+1].c_str());
+if(tz.alc>0){
+Button1->Caption="Тест завершен";
+Label3->Caption="Тест показал,что ваша игра категории"+(AnsiString)tz.fullres.c_str();
+}
+} }
+//---------------------------------------------------------------------------
+
+
+void __fastcall TForm1::RadioGroup1Click(TObject *Sender)
+{
+Button1->Enabled=true;
+}
+//---------------------------------------------------------------------------
+
+
